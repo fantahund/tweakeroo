@@ -3,6 +3,7 @@ package fi.dy.masa.tweakeroo.mixin;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
+import net.minecraft.client.resource.language.I18n;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.structure.StructureSet;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -29,7 +29,7 @@ import fi.dy.masa.tweakeroo.util.MiscUtils;
 
 @Mixin(PresetsScreen.class)
 public abstract class MixinPresetsScreen
-{
+{/* TODO 懒得写了
     @Shadow @Final static List<Object> PRESETS;
 
     @Shadow
@@ -117,7 +117,7 @@ public abstract class MixinPresetsScreen
                 return false;
             }
 
-            addPreset(new TranslatableText(name), item, biome, ImmutableSet.of(), false, false, layers);
+            addPreset(Text.literal(I18n.translate(name)), item, biome, ImmutableSet.of(), false, false, layers);
 
             return true;
         }
@@ -127,5 +127,5 @@ public abstract class MixinPresetsScreen
         }
 
         return false;
-    }
+    }*/
 }

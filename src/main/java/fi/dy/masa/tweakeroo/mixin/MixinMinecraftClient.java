@@ -93,18 +93,9 @@ public abstract class MixinMinecraftClient implements IMinecraftClientInvoker
 
     @Redirect(method = "doItemUse()V", at = @At(
                 value = "INVOKE",
-                target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(" +
-                         "Lnet/minecraft/client/network/ClientPlayerEntity;" +
-                         "Lnet/minecraft/client/world/ClientWorld;" +
-                         "Lnet/minecraft/util/Hand;" +
-                         "Lnet/minecraft/util/hit/BlockHitResult;" +
-                         ")Lnet/minecraft/util/ActionResult;"))
+                target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;"))
     private ActionResult onProcessRightClickBlock(
-            ClientPlayerInteractionManager controller,
-            ClientPlayerEntity player,
-            ClientWorld world,
-            Hand hand,
-            BlockHitResult hitResult)
+            ClientPlayerInteractionManager controller, ClientPlayerEntity player, Hand hand, BlockHitResult hitResult)
     {
         return PlacementTweaks.onProcessRightClickBlock(controller, player, world, hand, hitResult);
     }

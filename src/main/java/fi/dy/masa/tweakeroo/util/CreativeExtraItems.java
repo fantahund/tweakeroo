@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ArrayListMultimap;
 import com.mojang.brigadier.StringReader;
 import net.minecraft.block.InfestedBlock;
+import net.minecraft.command.CommandRegistryWrapper;
 import net.minecraft.command.argument.ItemStringReader;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import fi.dy.masa.tweakeroo.Tweakeroo;
+import net.minecraft.util.registry.Registry;
 
 public class CreativeExtraItems
 {
@@ -62,14 +64,12 @@ public class CreativeExtraItems
     {
         try
         {
-            ItemStringReader reader = new ItemStringReader(new StringReader(str), true);
-            reader.consume();
-            Item item = reader.getItem();
-
+            ItemStringReader.ItemResult itemResult =  ItemStringReader.item(CommandRegistryWrapper.of(Registry.ITEM), new StringReader(str));
+            Item item = itemResult.item().value();
             if (item != null)
             {
                 ItemStack stack = new ItemStack(item);
-                stack.setNbt(reader.getNbt());
+                stack.setNbt(itemResult.nbt());
                 return stack;
             }
         }

@@ -1,6 +1,8 @@
 package fi.dy.masa.tweakeroo.mixin;
 
 import java.util.function.Predicate;
+
+import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -32,6 +33,8 @@ public abstract class MixinGameRenderer
     @Final
     private MinecraftClient client;
 
+    @Shadow protected abstract void bobView(MatrixStack matrices, float tickDelta);
+
     private float realYaw;
     private float realPitch;
 
@@ -44,16 +47,16 @@ public abstract class MixinGameRenderer
         }
     }
 
-    @Redirect(method = "renderWorld", require = 0, at = @At(value = "FIELD",
-              target = "Lnet/minecraft/client/option/GameOptions;bobView:Z"))
-    private boolean disableWorldViewBob(GameOptions options)
+    @Redirect(method = "renderWorld", require = 0, at = @At(value = "INVOKE",
+              target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V"))
+    private void disableWorldViewBob(GameRenderer instance, MatrixStack matrices, float tickDelta)
     {
         if (Configs.Disable.DISABLE_WORLD_VIEW_BOB.getBooleanValue())
         {
-            return false;
+            return;
         }
 
-        return options.bobView;
+        this.bobView(matrices, tickDelta);
     }
 
     @Inject(method = "getFov", at = @At("HEAD"), cancellable = true)
@@ -65,7 +68,7 @@ public abstract class MixinGameRenderer
         }
         else if (FeatureToggle.TWEAK_FREE_CAMERA.getBooleanValue())
         {
-            cir.setReturnValue(this.client.options.fov);
+            cir.setReturnValue((double)this.client.options.getFov().getValue());
         }
     }
 
