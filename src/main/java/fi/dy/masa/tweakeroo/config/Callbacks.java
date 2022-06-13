@@ -1,5 +1,6 @@
 package fi.dy.masa.tweakeroo.config;
 
+import fi.dy.masa.tweakeroo.mixin.IMixinSimpleOption;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.SignBlockEntity;
@@ -155,7 +156,7 @@ public class Callbacks
             // If the feature is enabled on game launch, apply it here
             if (feature.getBooleanValue())
             {
-                this.mc.options.getGamma().setValue(Configs.Generic.GAMMA_OVERRIDE_VALUE.getDoubleValue());
+                ((IMixinSimpleOption)(Object)this.mc.options.getGamma()).setValueWithoutCheck(Configs.Generic.GAMMA_OVERRIDE_VALUE.getDoubleValue());
             }
         }
 
@@ -165,7 +166,7 @@ public class Callbacks
             if (config.getBooleanValue())
             {
                 Configs.Internal.GAMMA_VALUE_ORIGINAL.setDoubleValue(this.mc.options.getGamma().getValue());
-                this.mc.options.getGamma().setValue(Configs.Generic.GAMMA_OVERRIDE_VALUE.getDoubleValue());
+                ((IMixinSimpleOption)(Object)this.mc.options.getGamma()).setValueWithoutCheck(Configs.Generic.GAMMA_OVERRIDE_VALUE.getDoubleValue());
             }
             else
             {
