@@ -474,11 +474,15 @@ public class Configs implements IConfigHandler
             JsonUtils.writeJsonToFile(root, new File(dir, CONFIG_FILE_NAME));
         }
     }
-
+    static boolean firstLoad = true;
     @Override
     public void load()
     {
         loadFromFile();
+        if (firstLoad) {
+            firstLoad = false;
+            Callbacks.init(MinecraftClient.getInstance());
+        }
     }
 
     @Override
