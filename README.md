@@ -5,6 +5,10 @@ It adds a selection of miscellaneous, configurable, client-side tweaks to the ga
 Some examples of these are the "flexible block placement" tweak and the "fast block placement" tweak.
 For more information and the downloads (compiled builds), see http://minecraft.curseforge.com/projects/tweakeroo
 
+Download
+=========
+https://jenkins.fantacs.de/job/Tweakeroo/
+
 Compiling
 =========
 * Clone the repository
