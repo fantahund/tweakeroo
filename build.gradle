@@ -11,6 +11,7 @@ repositories {
 	maven {
 		url 'https://maven.hendrixshen.top'
 	}
+	mavenLocal()
 	// maven { url 'https://maven.quiltmc.org/repository/release/' }
 }
 
@@ -28,8 +29,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${config.fabric_loader_version}"
 	implementation "com.google.code.findbugs:jsr305:3.0.2"
 
-//	modImplementation "fi.dy.masa.malilib:malilib-fabric-${config.minecraft_version_out}:${config.malilib_version}"
-	modImplementation("curse.maven:malilib-303119:1.19")
+	modImplementation "fi.dy.masa.malilib:malilib-fabric-${config.minecraft_version_out}:${config.malilib_version}"
+	//modImplementation("curse.maven:malilib-303119:1.19")
 
 
 	// Fabric API. This is technically optional, but you probably want it anyway.

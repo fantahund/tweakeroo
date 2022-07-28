@@ -12,7 +12,7 @@ import fi.dy.masa.tweakeroo.util.MiscUtils;
 @Mixin(value = net.minecraft.client.gui.hud.ChatHud.class, priority = 1100)
 public abstract class MixinChatHud extends net.minecraft.client.gui.DrawableHelper
 {
-    @ModifyVariable(method = "addMessage(Lnet/minecraft/text/Text;I)V", at = @At("HEAD"), argsOnly = true)
+    @ModifyVariable(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;ILnet/minecraft/client/gui/hud/MessageIndicator;Z)V", at = @At("HEAD"), argsOnly = true)
     private net.minecraft.text.Text addTimestamp(net.minecraft.text.Text componentIn)
     {
         if (FeatureToggle.TWEAK_CHAT_TIMESTAMP.getBooleanValue())
